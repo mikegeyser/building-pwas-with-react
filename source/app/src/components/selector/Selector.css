@@ -1,0 +1,23 @@
+div.selector {
+    background-color: #282c34;
+    color: #FFF;
+    height: 2em;
+    font-size: 2em;
+    padding-top: 0.5em;
+}
+
+div.selector h4 {
+    margin: 0;
+}
+
+div.selector i:first-child {
+    float: left;
+    margin-left: 1em;
+    font-style: normal;
+}
+
+div.selector i:last-child {
+    float: right;
+    margin-right: 1em;
+    font-style: normal;
+}

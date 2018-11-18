@@ -1,0 +1,46 @@
+form.new {
+    display: flex;
+    flex-direction: column;
+	font-family:verdana;
+	font-size:16px;
+    color:#142170;	
+}
+
+form.new input, 
+form.new select {
+    display: flex;
+    flex: 1;
+	border-radius:5px;
+    background:white;
+	font-size:16px;
+    margin: 8px;
+	padding:8px;
+	border: 1px solid gray;
+}
+
+form.new div.buttons {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-content: center;
+}
+
+form.new div.buttons div {
+    display: flex;
+    flex: 1;
+    margin-top:25px;
+}
+
+form.new div.buttons div a,
+form.new div.buttons div button {
+    margin: auto;
+}
+
+form.new button {
+    font-size:16px;
+    background-color: #61dafb;
+	border-radius:5px;
+    color: white;
+    padding: 8px;
+    width: 100px;
+}

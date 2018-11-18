@@ -1,0 +1,22 @@
+div.list button {
+    display:block;
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    z-index: 9999;
+    font-size: 2em;
+    background-color:#282c34;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    
+}
+
+div.list button i {
+    display:block;
+    margin-top: -0.1em;
+    font-style: normal;
+    color: #61dafb;
+}
