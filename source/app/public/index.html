@@ -70,6 +70,29 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
+  <span>%NODE_ENV%</span>
+  <script>
+    const isProduction = ('%NODE_ENV%' === 'production');
+
+    if (isProduction && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => {
+          const channel = new BroadcastChannel('service-worker-channel');
+
+          channel.onmessage = (message) => {
+            if (message.data.promptToReload) {
+              if (confirm('Updates available. Would you like to reload?')) {
+                channel.postMessage({ skipWaiting: true });
+              };
+            }
+          }
+
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            window.location.reload();
+          });
+        });
+    }
+  </script>
 </body>
 
 </html>

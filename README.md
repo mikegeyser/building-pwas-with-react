@@ -5,6 +5,7 @@ The things I will be doing to convert an angular app to a PWA are:
 1. Create an app shell
 1. Precache all essential assets
 1. Cache any dynamic data returned from the api, including images.
+1. Prompt the user to install an updated service worker.
 1. Queue failed updates using IndexDb
 
 # 1. App Manifest
@@ -13,7 +14,7 @@ Create a `manifest.json` file in the `public/`.
 
 > Snippet: _1
 
-#### src/manifest.json
+#### public/manifest.json
 ```json
 {
   "short_name": "MemeWrangler",
@@ -68,7 +69,7 @@ Create a `manifest.json` file in the `public/`.
 ```
 
 > Snippet: _2
-#### src/index.html
+#### public/index.html
 ```html
 <link rel="manifest" href="/manifest.json">
 ```
@@ -79,7 +80,7 @@ And then you can see the manifest loaded up in Chrome.
 
 # 2. App Shell
 
-#### src/index.html
+#### public/index.html
 ```html
 <div id="root">This will only display while the app is loading!</div>
 ```
@@ -90,41 +91,41 @@ Change the inner html from a simple string to some markup.
 
 > Snippet: _3
 ```html
-    <div class="shell">
-      <div class="title">loading...</div>
-      <div class="meme">&nbsp;</div>
-      <div class="meme">&nbsp;</div>
-      <div class="meme">&nbsp;</div>
-    </div>
+<div class="shell">
+  <div class="title">loading...</div>
+  <div class="meme">&nbsp;</div>
+  <div class="meme">&nbsp;</div>
+  <div class="meme">&nbsp;</div>
+</div>
 ```
 
 Add some styling to sketch out what the page is going to look like.
 
 > Snippet: _4
 ```html
-  <style>
-    html,
-    body {
-      margin: 0;
-    }
+<style>
+  html,
+  body {
+    margin: 0;
+  }
 
-    .shell .title {
-      background-color: #282c34;
-      color: #fff;
-      text-align: center;
-      font: 32px sans-serif;
-      height: 2em;
-      font-size: 2em;
-      padding-top: 0.5em;
-      font-weight: bold;
-    }
+  .shell .title {
+    background-color: #282c34;
+    color: #fff;
+    text-align: center;
+    font: 32px sans-serif;
+    height: 2em;
+    font-size: 2em;
+    padding-top: 0.5em;
+    font-weight: bold;
+  }
 
-    .shell .meme {
-      margin: 0.5em 1em;
-      background-color: #e0e0e0;
-      min-height: 250px;
-    }
-  </style>
+  .shell .meme {
+    margin: 0.5em 1em;
+    background-color: #e0e0e0;
+    min-height: 250px;
+  }
+</style>
 ```
 
 Rebuild the solution.
@@ -155,7 +156,7 @@ Generate the service worker.
 
 A more powerful way to do this is not via config alone, but a template `sw.js`.
 
-> Snippet: _sw1
+> Snippet: _5
 #### src/sw.js
 ```js
 importScripts("workbox-v3.6.3/workbox-sw.js");
@@ -170,23 +171,25 @@ workbox.precaching.precacheAndRoute(precacheManifest);
 
 Change the config to respect the inject manifest.
 
-> Snippet: _config1
+> Snippet: _6
 #### workbox-config.js
 ```js
   "swSrc": "src/sw.js",
   "injectionPointRegexp": /(const precacheManifest = )\[\](;)/
 ```
 
-Install the service worker in the `src/main.ts` file.
+Install the service worker in the `public/index.html` file.
 
-#### src/main.ts
+#### public/index.html
 
-Register the service worker after the angular app has booted. Check to make sure that this is a production build, and that service worker is actually available. Then, register it.
+Register the service worker after the app has booted. Check to make sure that this is a production build, and that service worker is actually available. Then, register it.
 
-> Snippet: 
+> Snippet: _7
 ```js
 <script>
-  if ('serviceWorker' in navigator) {
+  const isProduction = ('%NODE_ENV%' === 'production');
+
+  if (isProduction && 'serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
   }
 </script>
@@ -204,12 +207,12 @@ Then we can build and test it.
 
 >> workbox copyLibraries build/
 
->> http-server dist/ -c 0
+>> http-server build/ -c 0
 ```
 
 We're going to do this a lot, so best to add it to the `package.json` scripts.
 
-> Snippet: _config2
+> Snippet: _8
 #### package.json
 ```json
 "start-sw": "workbox injectManifest workbox-config.js && workbox copyLibraries build/ &&  http-server dist -c 0"
@@ -227,7 +230,7 @@ Take a look at the Application tab in Chrome dev tools, to see the service worke
 
 Add a caching route for categories.
 
-> Snippet:
+> Snippet: _9
 #### src/sw.js
 ```js
 const dataCacheConfig = {
@@ -241,7 +244,7 @@ Open Chrome and verify that the categories are being served from service worker.
 
 Cache the other routes of interest.
 
-> Snippet: 
+> Snippet: _10
 #### src/sw.js
 ```js
 workbox.routing.registerRoute(/.*templates/, workbox.strategies.cacheFirst(dataCacheConfig), 'GET');
@@ -269,13 +272,7 @@ Open up in Chrome, show the images stored in the cache, and then the storage sum
 
 # 5. Proper updating for the service worker.
 
-We can automate the skip loading that we've been doing manually to force the install of the service worker.
-
--------------------------------
-# I think I should diverge at this point, and do the broadcast channel api stuffs.
--------------------------------
-
-> Snippet:
+> Snippet: _12
 #### src/sw.js
 ```js
 self.addEventListener('install', function(event) {
@@ -284,6 +281,49 @@ self.addEventListener('install', function(event) {
 ```
 
 This will suffice for our current need, but when the service worker updates the page will already have loaded. This means that we will need to reload the page to make full use of the updated service worker.
+
+> Snippet: _13
+#### src/sw.js
+```js
+const channel = new BroadcastChannel('service-worker-channel');
+channel.postMessage({ promptToReload: true });
+```
+
+> Snippet: _14
+#### public/index.html
+```js
+const channel = new BroadcastChannel('service-worker-channel');
+channel.onmessage = (message) => {
+  if (message.data.promptToReload) {
+    if (confirm('Updates available. Would you like to reload?')) {
+      channel.postMessage({ skipWaiting: true });
+    };
+  }
+}
+```
+
+> Snippet: _15
+#### src/sw.js
+```js
+channel.onmessage = (message) => {
+    if (message.data.skipWaiting) {
+        console.log('Skipping waiting and installing service worker.');
+        self.skipWaiting();
+    }
+};
+```
+
+> Snippet: _16
+#### public/index.html
+```js
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  window.location.reload();
+});
+```
+
+---------------------------------
+Back to background sync.
+---------------------------------
 
 # 6.1 Offline updates
 

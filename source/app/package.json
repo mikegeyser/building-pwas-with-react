@@ -12,7 +12,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-sw": "workbox injectManifest workbox-config.js && workbox copyLibraries build/ &&  http-server dist -c 0"
+    "start-sw": "workbox injectManifest workbox-config.js && workbox copyLibraries build/ &&  http-server build -c 0"
   },
   "eslintConfig": {
     "extends": "react-app"
