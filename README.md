@@ -1,6 +1,6 @@
 # The Demo!
 
-The things I will be doing to convert an angular app to a PWA are:
+The things I will be doing to convert an React app to a PWA are:
 1. Create an app manifest
 1. Create an app shell
 1. Precache all essential assets

@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Building Progressive Web Apps with React</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/simple.css">
+	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<style>
+		.primary {}
+
+		.secondary {}
+
+		.tertiary {}
+
+		.big {
+			font-size: 2em !important;
+			margin: -1em;
+		}
+
+		.left {
+			float: left;
+			margin-left: 1.2em;
+		}
+
+		.right {
+			float: right;
+			margin-right: 1.2em;
+		}
+
+		img {
+			border: 0 !important;
+			box-shadow: none !important;
+		}
+
+		div.rotate {
+			width: 200vw;
+			position: relative;
+			left: 50%;
+			right: 50%;
+			margin-left: -100vw;
+			margin-right: -100vw;
+
+			transform: rotate(-15deg) translate(0px, 100px);
+
+			font-size: 0.75em !important;
+		}
+
+		.one,
+		.two,
+		.three {
+			color: white !important;
+			padding: 0.3em !important;
+		}
+
+		.one {
+			background-color: rgb(200, 0, 0);
+		}
+
+		.two {
+			font-family: 'Lato', sans-serif !important;
+			color: black !important;
+		}
+
+		.three {
+			background-color: rgb(50, 50, 60);
+		}
+
+		.leftish {
+			position: relative;
+			left: -5em;
+			margin-left: 10em;
+			;
+		}
+
+		.rightish {
+			position: relative;
+			right: -5em;
+			bottom: -4em;
+			margin-right: 10em;
+		}
+
+		#bbd,
+		#gde,
+		#jozijs,
+		#docker {
+			width: 30vw;
+		}
+
+		#compiling {
+			position: absolute;
+			right: 20vw;
+			bottom: -6vw;
+		}
+
+		.browser {
+			height: 5em;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: 'Indie Flower', cursive !important;
+		}
+
+		b,
+		em {
+			font-family: 'Indie Flower', cursive !important;
+			font-size: 1.5em !important;
+			font-weight: normal;
+			font-style: normal !important;
+		}
+
+		.fade-out.visible {
+			opacity: 0.3 !important;
+			visibility: visible !important;
+		}
+
+		ol>li {
+			font-family: 'Indie Flower', cursive !important;
+		}
+
+		ol>li>span {
+			font-family: "Lato", sans-serif !important;
+		}
+
+		#twitter-handle {
+			position: absolute;
+			bottom: 1em;
+			left: 0;
+			z-index: 0;
+			font-family: 'Indie Flower', cursive !important;
+			font-size: 0.75em !important;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<div id="twitter-handle">@mikegeyser</div>
+			<section data-background-image="images/react-logo.svg" data-background-size="contain" data-background-position="bottom -300px right -400px">
+				<h3>Building</h3>
+				<h2>Progressive Web Apps</h2>
+				<h3>with React</h3>
+			</section>
+			<section>
+				<section>
+					<img id="bbd" src="images/bbd.png" alt="">
+					<img id="compiling" src="images/compiling.png" alt="" class="fragment">
+				</section>
+				<section>
+					<img id="gde" src="images/gde-badge.png" alt="">
+				</section>
+				<section>
+					<img id="jozijs" src="images/jozijs.png" alt="">
+				</section>
+				<section>
+					<img id="docker" src="images/docker.png" alt="">
+				</section>
+				<section>
+					<img src="images/javascript-guy.jpg" height="500px">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>What are PWAs, anyway?</h2>
+				</section>
+				<section>
+					<p>
+						<em>F</em>ast</p>
+					<p>
+						<em>I</em>ntegrated</p>
+					<p>
+						<em>R</em>eliable</p>
+					<p>
+						<em>E</em>ngaging</p>
+				</section>
+				<section>
+					<div class="left">
+						<p>
+							<em>P</em>rogressive </p>
+						<p class="fragment fade-out" data-fragment-index="1">
+							<em>R</em>esponsive </p>
+						<p>
+							<em>C</em>onnectivity independent </p>
+						<p>
+							<em>A</em>pp-like </p>
+						<p>
+							<em>F</em>resh</p>
+					</div>
+					<div class="right">
+						<p class="fragment fade-out" data-fragment-index="1">
+							<em>S</em>afe </p>
+						<p class="fragment fade-out" data-fragment-index="1">
+							<em>D</em>iscoverable </p>
+						<p class="fragment fade-out" data-fragment-index="1">
+							<em>R</em>e-engageable </p>
+						<p>
+							<em>I</em>nstallable </p>
+						<p class="fragment fade-out" data-fragment-index="1">
+							<em>L</em>inkable </p>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>App Manifest</h2>
+				</section>
+				<section>
+					<h2>App Shell</h2>
+				</section>
+				<section>
+					<h2>Service Worker</h2>
+				</section>
+				<section>
+					<h2>PRPL</h2>
+					<ul>
+						<li>
+							<em>P</em>ush critical resources.
+						</li>
+
+						<li>
+							<em>R</em>ender initial route.
+						</li>
+						<li>
+							<em>P</em>re-cache remaining routes.
+						</li>
+						<li>
+							<em>L</em>azy-load on demand.
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>So, what will we use?</h2>
+				</section>
+				<section>
+					<img src="images/React-logo.svg" height="300px">
+				</section>
+				<section>
+					<img src="images/Workbox-Logo.svg" height="300px">
+				</section>
+				<section>
+					<img src="images/lighthouse-logo.png" height="300px">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Where do we start?</h2>
+				</section>
+				<section>
+					<img src="images/lighthouse-before.png">
+					<img src="images/first-paint.png" class="fragment">
+				</section>
+				<section>
+					<ol>
+						<li>
+							<span><em>C</em>reate an App Manifest</span>
+						</li>
+						<li>
+							<span><em>C</em>reate an App Shell</span>
+						</li>
+						<li>
+							<span><em>P</em>recache essential assets</span>
+						</li>
+						<li>
+							<span><em>C</em>ache data and images.</span>
+						</li>
+						<li>
+							<span><em>U</em>pdate service worker.</span>
+						</li>
+					</ol>
+
+				</section>
+
+				<section>
+					<img src="images/demo.jpg">
+				</section>
+				<section>
+					<img src="images/demo-done.gif">
+				</section>
+				<section>
+					<img src="images/lighthouse-before.png">
+					<img src="images/lighthouse-after.png" class="fragment">
+					<img src="images/first-paint-after.png" class="fragment">
+				</section>
+				<section>
+					<ul>
+						<li>
+							<em>P</em>rogressive images.
+						</li>
+						<li>
+							<em>T</em>ext compression.
+						</li>
+						<li>
+							<em>H</em>TTP/2 + SSL.
+						</li>
+						<li>
+							<em>C</em>ode splitting.
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Summary</h2>
+					<h4>(Why should you care?)</h4>
+				</section>
+				<section>
+					<h2>Is it ready?</h2>
+					<img src="images/chrome.jpeg" class="browser">
+					<img src="images/firefox.png" class="browser">
+					<img src="images/edge.png" class="browser">
+					<img src="images/safari.png" class="browser">
+				</section>
+				<section>
+					<h2>Questions?</h2>
+					<br>
+					<p>@mikegeyser</p>
+					<p>mike@bbd.co.za</p>
+					<p>zatech.co.za</p>
+				</section>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			history: true,
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			]
+		});
+	</script>
+</body>
+
+</html>
