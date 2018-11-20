@@ -1,0 +1,8 @@
+.meme {
+    color: #000;
+    margin: 1em;
+}
+
+.meme canvas {
+    max-width:100%;
+}
