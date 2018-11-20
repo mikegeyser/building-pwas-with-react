@@ -22,10 +22,6 @@ workbox.routing.registerRoute(
     }),
     'GET');
 
-// self.addEventListener('install', function (event) {
-//     self.skipWaiting();
-// });
-
 self.addEventListener('install', (event) => {
     const channel = new BroadcastChannel('service-worker-channel');
     channel.postMessage({ promptToReload: true });
@@ -37,5 +33,3 @@ self.addEventListener('install', (event) => {
         }
     };
 });
-
-// trigger change
