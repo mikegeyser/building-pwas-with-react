@@ -50,6 +50,11 @@ class App extends Component {
     this.setState({ showNew: true });
   }
 
+  reloadMemes() {
+    this.fetchMemes(this.state.selectedCategory)
+      .then(_ => this.setState({ showNew: false }));
+  }
+
   render() {
     return (
       <div className="App">
@@ -63,7 +68,10 @@ class App extends Component {
 
         {this.state.memes && !this.state.showNew && <List memes={this.state.memes}></List>}
 
-        {this.state.showNew && <New category={this.state.categories[this.state.selectedCategory].key}></New>}
+        {this.state.showNew &&
+          <New category={this.state.categories[this.state.selectedCategory].key}
+            reloadMemes={() => this.reloadMemes()}>
+          </New>}
       </div>
     );
   }

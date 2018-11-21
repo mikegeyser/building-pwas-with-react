@@ -43,7 +43,12 @@ class New extends Component {
     }
 
     save() {
-
+        api.saveMeme(
+            this.props.category,
+            this.state.preview.template,
+            this.state.preview.top,
+            this.state.preview.bottom)
+            .then(() => this.props.reloadMemes());
     }
 
     render() {
@@ -66,7 +71,7 @@ class New extends Component {
                         <a href="/">Cancel</a>
                     </div>
                     <div>
-                        <button onClick={() => this.save()}>Save</button>
+                        <button type="button" onClick={() => this.save()}>Save</button>
                     </div>
                 </div >
             </form >
