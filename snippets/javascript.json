@@ -1,0 +1,130 @@
+{
+	// Place your snippets for javascript here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"Create react component": {
+		"prefix": "react",
+		"body": [
+			"import React from 'react';",
+			"",
+			"class ${1:ComponentName} extends React.Component {",
+			"    render(){",
+			"        return (",
+			"            <div>",
+			"                It Works!",
+			"            </div>",
+			"        );",
+			"    }",
+			"}",
+			"",
+			"export default ${1:ComponentName};",
+		],
+		"description": "<3"
+	},
+	"Template service worker": {
+		"prefix": "_5",
+		"body": [
+			"importScripts(\"workbox-v3.6.3/workbox-sw.js\");",
+			"",
+			"workbox.setConfig({modulePathPrefix: 'workbox-v3.6.3/'})",
+			"",
+			"const precacheManifest = [];",
+			"",
+			"workbox.precaching.suppressWarnings();",
+			"workbox.precaching.precacheAndRoute(precacheManifest);"
+		],
+		"description": "Create the template service worker"
+	},
+	"Add the workbox config": {
+		"prefix": "_6",
+		"body": [
+			"\"swSrc\": \"src/sw.js\",",
+			"\"injectionPointRegexp\": /(const precacheManifest = )\\[\\](;)/",
+		],
+		"description": "Add the workbox config for the templated service worker"
+	},
+	"Add routing for categories": {
+		"prefix": "_9",
+		"body": [
+			"const dataCacheConfig = {",
+			"   cacheName: 'meme-data'",
+			"};",
+			"",
+			"workbox.routing.registerRoute(/.*categories/, workbox.strategies.cacheFirst(dataCacheConfig), 'GET');",
+		],
+		"description": "Add routing for categories"
+	},
+	"Add routing for templates and memes": {
+		"prefix": "_10",
+		"body": [
+			"workbox.routing.registerRoute(/.*templates/, workbox.strategies.cacheFirst(dataCacheConfig), 'GET');",
+			"workbox.routing.registerRoute(/.*memes\\/.\\w+/, workbox.strategies.staleWhileRevalidate(dataCacheConfig), 'GET');",
+		],
+		"description": "Add routing for templates and memes"
+	},
+	"Add routing for images": {
+		"prefix": "_11",
+		"body": [
+			"workbox.routing.registerRoute(",
+			"    /.*.(?:png|jpg|jpeg|svg)$/,",
+			"    workbox.strategies.cacheFirst({",
+			"        cacheName: 'meme-images'",
+			"    }), ",
+			"    'GET');",
+		],
+		"description": "Add routing for images"
+	},
+	"Skip waiting": {
+		"prefix": "_12",
+		"body": [
+			"self.addEventListener('install', function(event) {",
+			"    self.skipWaiting();",
+			"});",
+		],
+		"description": "Skip waiting"
+	},
+	"Create broadcast channel in service worker": {
+		"prefix": "_13",
+		"body": [
+			"const channel = new BroadcastChannel('service-worker-channel');",
+			"channel.postMessage({ promptToReload: true });",
+		],
+		"description": "Create broadcast channel in service worker"
+	},
+	"Create broadcast channel in index": {
+		"prefix": "_14",
+		"body": [
+			"const channel = new BroadcastChannel('service-worker-channel');",
+			"channel.onmessage = (message) => {",
+			"  if (message.data.promptToReload) {",
+			"    if (confirm('Updates available. Would you like to reload?')) {",
+			"      channel.postMessage({ skipWaiting: true });",
+			"    };",
+			"  }",
+			"}"
+		],
+		"description": "Create broadcast channel in index"
+	},
+	"Controller change event": {
+		"prefix": "_16",
+		"body": [
+			"navigator.serviceWorker.addEventListener('controllerchange', () => {",
+			"  window.location.reload();",
+			"});",
+		],
+		"description": "Controller change event"
+	},
+	"Respond to skip waiting": {
+		"prefix": "_15",
+		"body": [
+			"channel.onmessage = (message) => {",
+			"    if (message.data.skipWaiting) {",
+			"        self.skipWaiting();",
+			"    }",
+			"};",
+		],
+		"description": "Respond to skip waiting"
+	},
+}

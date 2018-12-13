@@ -1,0 +1,78 @@
+{
+    // Place your snippets for json here. Each snippet is defined under a snippet name and has a prefix, body and 
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+    "App Manifest": {
+        "prefix": "_1",
+        "body": [
+            "{",
+            "  \"short_name\": \"MemeWrangler\",",
+            "  \"name\": \"Meme Wrangler 9001\",",
+            "  \"icons\": [",
+            "    {",
+            "      \"src\": \"images/icons/icon-72x72.png\",",
+            "      \"sizes\": \"72x72\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-96x96.png\",",
+            "      \"sizes\": \"96x96\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-128x128.png\",",
+            "      \"sizes\": \"128x128\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-144x144.png\",",
+            "      \"sizes\": \"144x144\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-152x152.png\",",
+            "      \"sizes\": \"152x152\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-192x192.png\",",
+            "      \"sizes\": \"192x192\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-384x384.png\",",
+            "      \"sizes\": \"384x384\",",
+            "      \"type\": \"image/png\"",
+            "    },",
+            "    {",
+            "      \"src\": \"images/icons/icon-512x512.png\",",
+            "      \"sizes\": \"512x512\",",
+            "      \"type\": \"image/png\"",
+            "    }",
+            "  ],",
+            "  \"start_url\": \".\",",
+            "  \"display\": \"standalone\",",
+            "  \"theme_color\": \"#000000\",",
+            "  \"background_color\": \"#ffffff\"",
+            "}"
+        ],
+        "description": "Add app manifest"
+    },
+    "Npm start script": {
+        "prefix": "_8",
+        "body": [
+            "\"start-sw\": \"workbox injectManifest workbox-config.js && workbox copyLibraries build/ &&  http-server build -c 0\""
+        ],
+        "description": "Add npm start script"
+    }
+}

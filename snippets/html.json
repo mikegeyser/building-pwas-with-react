@@ -1,0 +1,91 @@
+{
+	// Place your snippets for html here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"Link app manifest": {
+		"prefix": "_2",
+		"body": [
+			"<link rel=\"manifest\" href=\"/manifest.json\">"
+		],
+		"description": "Link app manifest"
+	},
+	"App shell - html": {
+		"prefix": "_3",
+		"body": [
+			"<div class=\"shell\">",
+			"  <div class=\"title\">loading...</div>",
+			"  <div class=\"meme\">&nbsp;</div>",
+			"  <div class=\"meme\">&nbsp;</div>",
+			"  <div class=\"meme\">&nbsp;</div>",
+			"</div>"
+		],
+		"description": "Add html for app shell"
+	},
+	"App shell - css": {
+		"prefix": "_4",
+		"body": [
+			"<style>",
+			"  html,",
+			"  body {",
+			"    margin: 0;",
+			"  }",
+			"",
+			"  .shell .title {",
+			"    background-color: #282c34;",
+			"    color: #fff;",
+			"    text-align: center;",
+			"    font: 32px sans-serif;",
+			"    height: 2em;",
+			"    font-size: 2em;",
+			"    padding-top: 0.5em;",
+			"    font-weight: bold;",
+			"  }",
+			"",
+			"  .shell .meme {",
+			"    margin: 0.5em 1em;",
+			"    background-color: #e0e0e0;",
+			"    min-height: 250px;",
+			"  }",
+			"</style>",
+		],
+		"description": "Add css for app shell"
+	},
+	"Register service worker": {
+		"prefix": "_7",
+		"body": [
+			"<script>",
+			"  const isProduction = ('%NODE_ENV%' === 'production');",
+			"",
+			"  if (isProduction &&'serviceWorker' in navigator) {",
+			"    navigator.serviceWorker.register('sw.js');",
+			"  }",
+			"</script>",
+		],
+		"description": "Register the service worker in index.html"
+	},
+	"Create broadcast channel in index": {
+		"prefix": "_14",
+		"body": [
+			"const channel = new BroadcastChannel('service-worker-channel');",
+			"channel.onmessage = (message) => {",
+			"  if (message.data.promptToReload) {",
+			"    if (confirm('Updates available. Would you like to reload?')) {",
+			"      channel.postMessage({ skipWaiting: true });",
+			"    };",
+			"  }",
+			"}"
+		],
+		"description": "Create broadcast channel in index"
+	},
+	"Controller change event": {
+		"prefix": "_16",
+		"body": [
+			"navigator.serviceWorker.addEventListener('controllerchange', () => {",
+			"  window.location.reload();",
+			"});",
+		],
+		"description": "Controller change event"
+	}
+}
